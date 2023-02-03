@@ -25,10 +25,15 @@ def login():
 
     if request.method == 'POST':
         print('POST received')
-        user_input = request.form.get('user_input')
-        print("user input:" + user_input)
+        user_captcha = request.form.get('user_captcha')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        print("username:" + username)
+        print("password:" + password)
+        print("captcha:" + user_captcha)
+
         print('old passcode: ' + session['passcode'])
-        if user_input == session['passcode']:
+        if user_captcha == session['passcode']:
             capcha = 'Accepted'
         else:
             capcha = 'Failed'
