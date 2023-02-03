@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}login title{% endblock %}
+
+{% block welcome_string%}
+<h1> Welcome to login page</h1>
+{% endblock %}
+
+{% block main%}
+<p>Скажи: "{{passcode}}" и войди</p>
+<form method='POST' name='user_input_form'>
+  <input type="text" class="form-control" name="user_input" id="user_input" placeholder="enter passcode">
+  <button type="submit">enter</button>
+</form>
+
+<p>Капча {{capcha}}</p>
+
+{% endblock %}
+
