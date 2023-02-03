@@ -2,26 +2,32 @@ from flask import Blueprint, redirect, url_for, render_template, request, sessio
 import string
 import random
 from captcha.image import ImageCaptcha
-
-
-# write the image on the given file and save it
+from PIL import Image
+import base64
+import io
 
 auth = Blueprint('auth', __name__)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    # image = ImageCaptcha(width=280, height=90)
-    # captcha_text = ''.join(random.choices(string.digits, k=5))
-    # data = image.generate(captcha_text)
-    # image.write(captcha_text, 'CAPTCHA.png')
 
     if request.method == 'GET':
-        passcode = ''.join(random.choices(string.digits, k=5))
-        print('GET received')
-        print('capcha code:' + passcode)
-        session['passcode'] = passcode
-        return render_template('login.html', passcode=passcode)
+
+        #captcha generation and saving in session
+        captcha_text = ''.join(random.choices(string.digits, k=5))
+        session['captcha_text'] = captcha_text
+        #image generation
+        image = ImageCaptcha(width=280, height=90)
+        image.generate(captcha_text)
+        image.write(captcha_text, 'CAPTCHA.png')
+        # image file to raw data
+        im = Image.open('CAPTCHA.png')
+        data = io.BytesIO()
+        im.save(data, "PNG")
+        encoded_img_data = base64.b64encode(data.getvalue())
+        ###
+        return render_template('login.html', img_data=encoded_img_data.decode('utf-8'))
 
     if request.method == 'POST':
         print('POST received')
@@ -32,12 +38,10 @@ def login():
         print("password:" + password)
         print("captcha:" + user_captcha)
 
-        print('old passcode: ' + session['passcode'])
-        if user_captcha == session['passcode']:
-            capcha = 'Accepted'
-        else:
-            capcha = 'Failed'
-        return render_template('login.html', capcha=capcha)
+        print('old captcha_text: ' + session['captcha_text'])
+
+        captcha_result = 'Accepted' if user_captcha == session['captcha_text'] else 'Failed'
+        return render_template('login.html', captcha_result=captcha_result)
 
 
 @auth.route('/logout')

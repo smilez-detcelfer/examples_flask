@@ -6,27 +6,21 @@
 {% endblock %}
 
 {% block main%}
-
-<p>Say: "{{passcode}}" and enter</p>
 <form method='POST' name='user_input_form' action="#">
   <p>Name:</p>
   <p><input type="text" name="username" placeholder="enter username"/></p>
+
   <p>Password:</p>
   <p><input type="password" name="password" placeholder="enter password"/></p>
+
   <p>Capcha:</p>
+  <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
   <p><input type="text" class="form-control" name="user_captcha" id="user_captcha" placeholder="enter captcha">
   </p>
 
   <button type="submit">enter</button>
 </form>
 
-{% block content %}
-<form action="#" method="post">
-
-</form>
-{% endblock %}
-
-<p>Captcha result: {{capcha}}</p>
-
+<p>Captcha result: {{captcha_result}}</p>
 {% endblock %}
 
