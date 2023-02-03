@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--#prints elements of list from backend-->
+{% for i in list %}
+    {# means len(str(i)) > 3 #}
+    {% if i|string|length > 3 %}
+        <p>{{i}}</p>
+    {% endif %}
+{% endfor %}
+</body>
+</html>

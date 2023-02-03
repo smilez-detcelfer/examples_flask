@@ -1,12 +1,21 @@
 from flask import Blueprint, redirect, url_for, render_template, request, session
 import string
 import random
+from captcha.image import ImageCaptcha
+
+
+# write the image on the given file and save it
 
 auth = Blueprint('auth', __name__)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    # image = ImageCaptcha(width=280, height=90)
+    # captcha_text = ''.join(random.choices(string.digits, k=5))
+    # data = image.generate(captcha_text)
+    # image.write(captcha_text, 'CAPTCHA.png')
+
     if request.method == 'GET':
         passcode = ''.join(random.choices(string.digits, k=5))
         print('GET received')
@@ -20,9 +29,9 @@ def login():
         print("user input:" + user_input)
         print('old passcode: ' + session['passcode'])
         if user_input == session['passcode']:
-            capcha = 'Пройдена'
+            capcha = 'Accepted'
         else:
-            capcha = 'Провалена'
+            capcha = 'Failed'
         return render_template('login.html', capcha=capcha)
 
 
@@ -33,4 +42,5 @@ def logout():
 @auth.route('/sign-up')
 def sign_up():
     return render_template('signup.html')
+
 

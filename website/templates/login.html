@@ -6,13 +6,28 @@
 {% endblock %}
 
 {% block main%}
-<p>Скажи: "{{passcode}}" и войди</p>
-<form method='POST' name='user_input_form'>
-  <input type="text" class="form-control" name="user_input" id="user_input" placeholder="enter passcode">
+
+<p>Say: "{{passcode}}" and enter</p>
+<form method='POST' name='user_input_form' action="#">
+  <p>Name:</p>
+  <p><input type="text" name="username" /></p>
+
+  <p>Password:</p>
+  <p><input type="password" name="username" /></p>
+  <p>Capcha:</p>
+  <p><input type="text" class="form-control" name="user_input" id="user_input" placeholder="enter passcode">
+  </p>
+
   <button type="submit">enter</button>
 </form>
 
-<p>Капча {{capcha}}</p>
+{% block content %}
+<form action="#" method="post">
+
+</form>
+{% endblock %}
+
+<p>Capcha result: {{capcha}}</p>
 
 {% endblock %}
 
