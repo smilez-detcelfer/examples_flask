@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 {% block title %}login title{% endblock %}
 
+
+
 {% block welcome_string%}
 <h1> Welcome to login page</h1>
 {% endblock %}
 
+<!--flashing messages block-->
 {% block main%}
+{% with messages = get_flashed_messages()%}
+  {% if messages %}
+    {% for msg in messages%}
+      <p>{{msg}}</p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+<!--flashing messages block-->
 <form method='POST' name='user_input_form' action="#">
   <p>Name:</p>
   <p><input type="text" name="username" placeholder="enter username"/></p>

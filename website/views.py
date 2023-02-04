@@ -11,3 +11,4 @@ def home():
 def passing_list():
     backend_list = [12, 11233456, 'firststring', 'secnd', 'sr']
     return render_template('render_list.html', list = backend_list)
+
