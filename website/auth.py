@@ -31,13 +31,16 @@ def login():
         user_captcha = request.form.get('user_captcha')
         username = request.form.get('username')
         password = request.form.get('password')
+        print("username:" + username)
+        print("password:" + password)
+        print("captcha:" + user_captcha)
         captcha_result = 'Accepted' if user_captcha == session['captcha_text'] else 'Failed'
-        return redirect(url_for("user"))
+        return render_template('login.html', captcha_result=captcha_result)
+
 
 @auth.route('/logout')
 def logout():
-    flash("you're logged out", "info")
-    return redirect(url_for('auth.login'))
+    return '<p>logout</p>'
 
 
 @auth.route('/sign-up')
@@ -45,6 +48,3 @@ def sign_up():
     return render_template('signup.html')
 
 
-@auth.route("user")
-def user():
-        return render_template('auth.user.html')
